@@ -1,10 +1,50 @@
 const TARGET_URL = 'https://fast.snova.ai/api/completion';
 // use model override to disregard the model specified in the request and use the model specified here
 // for example, you can set it to 'llama3-405b', so that even if the request said it want to use gpt-4o, it will use llama3-405b
-const MODEL_OVERRIDE = 'llama3-405b'; // Set this to null or an empty string if you don't want to override
+const MODEL_OVERRIDE = ''; // Set this to null or an empty string if you don't want to override
 
 export default {
   async fetch(request) {
+    if (request.method === 'GET' && request.url.endsWith('/v1/models')) {
+      return new Response(JSON.stringify({
+        "object": "list",
+        "data": [
+          {
+            "id": "llama3-405b",
+            "object": "model",
+            "created": 1686935002,
+            "owned_by": "sambanova-ai"
+          },
+          {
+            "id": "Meta-Llama-3.1-405B-Instruct",
+            "object": "model",
+            "created": 1686935002,
+            "owned_by": "sambanova-ai",
+          },
+          {
+            "id": "Meta-Llama-3.1-70B-Instruct",
+            "object": "model",
+            "created": 1686935002,
+            "owned_by": "sambanova-ai",
+          },
+          {
+            "id": "Meta-Llama-3.1-8B-Instruct",
+            "object": "model",
+            "created": 1686935002,
+            "owned_by": "sambanova-ai",
+          },
+          
+        ],
+      }), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+        }
+      });
+    }
     if (request.method === 'POST' && request.url.endsWith('/v1/chat/completions')) {
       try {
         const originalPayload = await request.json();
