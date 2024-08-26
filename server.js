@@ -8,7 +8,40 @@ const TARGET_URL = 'https://fast.snova.ai/api/completion';
 const MODEL_OVERRIDE = ''; // Set this to null or an empty string if you don't want to override
 
 const server = http.createServer((req, res) => {
-  if (req.method === 'POST' && req.url === '/v1/chat/completions') {
+  if (req.method === 'GET' && req.url === '/v1/chat/models') {
+    const modelsResponse = {
+      "object": "list",
+      "data": [
+        {
+          "id": "llama3-405b",
+          "object": "model",
+          "created": 1686935002,
+          "owned_by": "sambanova-ai"
+        },
+        {
+          "id": "Meta-Llama-3.1-405B-Instruct",
+          "object": "model",
+          "created": 1686935002,
+          "owned_by": "sambanova-ai",
+        },
+        {
+          "id": "Meta-Llama-3.1-70B-Instruct",
+          "object": "model",
+          "created": 1686935002,
+          "owned_by": "sambanova-ai",
+        },
+        {
+          "id": "Meta-Llama-3.1-8B-Instruct",
+          "object": "model",
+          "created": 1686935002,
+          "owned_by": "sambanova-ai",
+        },
+      ],
+      "object": "list"
+    };
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(modelsResponse));
+  } else if (req.method === 'POST' && req.url === '/v1/chat/completions') {
     let body = '';
 
     req.on('data', chunk => {
@@ -18,7 +51,7 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       try {
         const originalPayload = JSON.parse(body);
-        
+
         // Override the model if MODEL_OVERRIDE is set
         if (MODEL_OVERRIDE && MODEL_OVERRIDE.trim() !== '') {
           originalPayload.model = MODEL_OVERRIDE;
