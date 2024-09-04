@@ -34,4 +34,49 @@ To achieve this, you can modify the `MODEL_OVERRIDE` parameter at the top of the
 Copy and paste the content of `cf-worker.js` into your cloudflare worker and deploy. The Sambanova AI Proxy Server will be on your cloudflare worker as a serverless endpoint!
 
 
+## Docker
 
+build the image
+~~~sh
+docker build -t sambanova .
+~~~
+
+docker run
+~~~sh
+docker run \
+  --name sambanova-ai-proxy \
+  -p 11435:11435 \
+  --read-only \
+  sambanova
+~~~
+
+if you want to enable model override and specified a model, you can pass it as an environment variable
+~~~sh
+docker run \
+  --name sambanova-ai-proxy \
+  -p 11435:11435 \
+  --read-only \
+  -e MODEL_OVERRIDE="llama3-405b" \
+  sambanova
+~~~
+
+or you can you docker compose: in the project directory, execute:
+~~~sh
+docker compose up -d
+~~~
+
+Here is the docker compose file
+~~~yaml
+version: '3.8'
+
+services:
+  node-server:
+    image: sambanova
+    container_name: sambanova-ai-proxy
+    ports:
+      - "11435:11435"
+    environment:
+      - MODEL_OVERRIDE=""
+    read_only: true
+    restart: unless-stopped
+~~~

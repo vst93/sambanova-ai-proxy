@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  node-server:
+    image: sambanova
+    container_name: sambanova-ai-proxy
+    ports:
+      - "11435:11435"
+    environment:
+      - MODEL_OVERRIDE=""
+    read_only: true
+    restart: unless-stopped

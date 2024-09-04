@@ -5,7 +5,7 @@ const PORT = 11435;
 const TARGET_URL = 'https://fast.snova.ai/api/completion';
 // use model override to disregard the model specified in the request and use the model specified here
 // for example, you can set it to 'llama3-405b', so that even if the request said it want to use gpt-4o, it will use llama3-405b
-const MODEL_OVERRIDE = ''; // Set this to null or an empty string if you don't want to override
+const MODEL_OVERRIDE = process.env.MODEL_OVERRIDE || ''; // Set this to null or an empty string if you don't want to override
 
 const server = http.createServer((req, res) => {
   if (req.method === 'GET' && req.url === '/v1/chat/models') {
