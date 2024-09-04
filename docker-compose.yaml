@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   node-server:
-    image: sambanova
+    image: ghcr.io/lingo34/sambanova-ai-proxy:main
     container_name: sambanova-ai-proxy
     ports:
       - "11435:11435"

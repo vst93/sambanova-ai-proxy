@@ -36,28 +36,25 @@ Copy and paste the content of `cf-worker.js` into your cloudflare worker and dep
 
 ## Docker
 
-build the image
-~~~sh
-docker build -t sambanova .
-~~~
+The docker image for this project is hosted on GitHub Container Registry and automatically build via GitHub action.
 
 docker run
 ~~~sh
-docker run \
+docker run -d\
   --name sambanova-ai-proxy \
   -p 11435:11435 \
   --read-only \
-  sambanova
+  ghcr.io/lingo34/sambanova-ai-proxy:main
 ~~~
 
-if you want to enable model override and specified a model, you can pass it as an environment variable
+if you want to enable model override and specified a model, you can pass it as an environment variable.
 ~~~sh
-docker run \
+docker run -d\
   --name sambanova-ai-proxy \
   -p 11435:11435 \
   --read-only \
   -e MODEL_OVERRIDE="llama3-405b" \
-  sambanova
+  ghcr.io/lingo34/sambanova-ai-proxy:main
 ~~~
 
 or you can you docker compose: in the project directory, execute:
@@ -71,7 +68,7 @@ version: '3.8'
 
 services:
   node-server:
-    image: sambanova
+    image: ghcr.io/lingo34/sambanova-ai-proxy:main
     container_name: sambanova-ai-proxy
     ports:
       - "11435:11435"
@@ -79,4 +76,10 @@ services:
       - MODEL_OVERRIDE=""
     read_only: true
     restart: unless-stopped
+~~~
+
+or if you want to build the image yourself
+
+~~~sh
+docker build -t sambanova-ai-proxy .
 ~~~
