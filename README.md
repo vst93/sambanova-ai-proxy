@@ -1,5 +1,7 @@
 # sambanova-ai-proxy
 
+[中文](https://github.com/lingo34/sambanova-ai-proxy/blob/main/README.cn.md)
+
 >  ⚠️ All content in this repository is for experimental purposes
 
 >  ⚠️ In using this program, you agree to Sambanova [Terms of Use](https://sambanova.ai/model-demo-tou) and [Privacy Policy](https://sambanova.ai/privacy-policy), which allows them to use anything you send to their server according to these policies. Therefore, you should not use it to process any sensitive information.
